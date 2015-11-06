@@ -1,0 +1,26 @@
+#+TITLE: How to interpret the Erlang crash dump/Erlang崩溃转储文件
+#+AUTHOR:Simon
+#+EMAIL: xue.shumeng@yahoo.com
+#+KEYWORDS: crash dump
+#+OPTIONS: H:1 toc:0
+
+* How to interpret the Erlang crash dump/如何解读Erlang崩溃转储文件
+  本文档描述了Erlang运行时产生的崩溃转储文件(erl_crash.dump)。
+  注意：OTP发行版本R9C中crash dump有较大变更。本文档不适用于旧版本的crash dump。不管怎样，如果你使用浏览器工具查看旧版本的崩溃转储文件，它将翻译为新版本类似的格式。
+** General information/一般信息
+   文件的第一个部分就是转储的创建时间，一个dump原因标志，一个系统版本号，指示了该dump的来源。dump来源节点的编译时间。
+** Scheduler information/程序调度信息
+** Memory information/内存信息
+** Internal table information/内部表信息
+** Allocated areas/分配区域
+** Allocator/分配器
+** Process information/进程信息
+** Port information/端口信息
+** ETS Tables/ETS表
+** Timers/定时器
+** Distribution information/节点分布信息
+** Loaded module information/已加载模块信息
+** Fun information/函数信息
+** Process Data/进程数据
+** Atoms/原子
+** Disclaimer/免责声明

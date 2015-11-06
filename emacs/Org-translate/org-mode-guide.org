@@ -1,0 +1,118 @@
+#+TITLE: Org-mode Guide
+#+AUTHOR:Simon
+#+EMAIL: xue.shumeng@yahoo.com
+#+KEYWORDS: org-mode guide
+#+OPTIONS: H:16 toc:0
+
+* Introduction/引言
+** Preface
+Org是一种记笔记的方式，维护TODO列表，使用一种快速有效的纯文本系统做项目计划。它也是一个创作和出版的系统，它支持与源码进行编程和重现性研究
+这个文档是一个非常小的综合性的组织模式手册。它包含所有基本功能和命令，以及定制的重要提示。它的目的是用一下200也的手册为初学者提供向导。
+** Installation
+   注意：如果你使用的是Emacs分发版本中的Org或者XEmacs包，请跳过本节，直接到[[activation]]节【Activato】。
+如果你已经从网络下载了Org（.zip/.tar或者一个git存档），你需要添加这个lisp子目录到Emacs加在路径。将下面这些代码添加到.emacs文件中：
+#+begin_src emacs-lisp
+(setq load-path (cons "~/path/to/orgdir/lisp" load-path))
+(setq load-path (cons "~/path/to/orgdir/contrib/lisp" load-path))
+#+end_src
+如果你使用git或者tar ball获得Org，你需要运行以下命令生成加载信息，命令：
+
+make autoloads
+
+** <<activation>> Activation
+添加一下elisp代码到你的.emacs中。最后的四行代码将一些命令绑定到了全局的快捷键上。（可自选合适的按键组合）
+#+begin_src emacs-lisp
+;; The following lines are always needed.Choose your own keys.
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-cb" 'org-iswitchb)
+#+end_src
+这样我们打开".org"的文件是Emacs会自动记载Org模式。
+** Feedback
+   如果你有关于Org的bug、问题或者好的想法，请发送邮件至Org邮件列表（emacs-orgmode@gun.org）。更多关于如何提交bug的方法，参见主要手册（main manual）。
+* Document Structure/文档结构
+  Org是基于大纲的模式编写，并提供灵活的命令来编辑此类结构的文件。
+** Outlines / 大纲
+   Org是在大纲模式上实现的，大纲模式是以不同的层次结构组织文件。这是一种不错的文档表述方式。我们可以通过折叠（隐藏）和展开（现实）标题下内容的方式使文档只显示我们关注的部分，
+** Headlines / 标题
+   我们使用标题来定义一个大纲的树型结构，标题以一个或多个星号从左边开始。例：
+   #+begin_src org
+   * 一级标题
+   ** 二级标题
+   *** 三级标题
+       此处编写标题下内容。以上标题的格式：“*+空格+标题”
+   * 另一个一级标题
+   #+end_src
+   在Org buffer里任意地方都可以定义脚注，且脚注的内容不会被导出。（C-c C-x f）
+** Visibility cycling / 大纲的折叠与展开
+   缓冲区中的文本部分大纲下的内容可以折叠（隐藏），Org只使用两个按键（命令）使其隐藏和显示。在一个缓冲区中通过绑定了的TAB和S-TAB（Shift-Table）去控制各级标题的折叠、展开。
+
+   (TAB) 控制子标题的折叠、展开
+
+   (C-u TAB) 或者（Shift-TAB） 调用全部标题的折叠、展开命令。
+   
+   (C-u C-u C-u TAB) 展开所有标题
+
+   Emacs刚打开Org文件时，所有的标题都是折叠的（OVERVIEW），只能看到顶级标题。
+
+   如果不想这样，可以通过设置org-startup-folded变量，或者在每个Org文件头部添加启动加载项：#+STARTUP:content / overview / showall.
+
+   比如：#+STARTUP:content ，将它添加到你的Org文件里再次打开文件，看看是什么效果。。。（目前我没尝试 ^_^!）
+** Mtion / 快捷键
+   (C-c C-n) -> 下一个标题
+
+   (C-c C-p) -> 上一个标题
+
+   (C-c C-f) -> 下一个同级标题
+
+   (C-c C-b) -> 上一个同级标题
+
+   (C-c C-u) -> 当前标题的最高级别的标题处（描述不清，自己试一试吧 ^_^）
+
+** TODO Structure editing / 编辑
+   （M-RET）          添加一个于当前级别相同的标题。如果当前光标在一个“列表项”中，点击此键会产生一个新的列表项。当光标在行的中间，会将此行分为两部分后半部分为新的同级标题部分。
+
+   （M-S-RET）        插入一个与当前新的代办事项（TODO）
+ 
+   （TAB）            调整当前行为合理的缩进格式
+
+   （M-left/right）   增减当前标题等级，每次加一个等级
+
+   （M-S-left/right） 增减当前标题及其子标题的等级，每次一个等级
+
+   （M-S-up/down）    移动（交换）同级子标题
+
+   （C-c C-w）        
+** Sparse trees
+  
+** Plain lists / 列表
+   
+** Footnotes / 脚注
+* Tables/表格
+
+* Hyperlinks/超链接
+
+* *TODO* Items/TODO列表
+
+* Tags/标记
+
+* Properties/特性
+
+* Dates and Times/日期和时间
+
+* Capture-Refile-Archive/捕获-申请-档案
+
+* Agenda Views/日程视图
+
+* Markup for rich export/标记为富文本导出
+
+* Exporting/导出
+
+* Publishing/发布（出版）
+
+* Working with source code/与源码一起工作
+
+* Miscellaneous/其他
+
+* GNU Free Documentation License/GUN免费文档许可证

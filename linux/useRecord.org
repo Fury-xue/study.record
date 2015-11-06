@@ -1,0 +1,15 @@
+#+TITLE: Linux use record
+#+AUTHOR:Simon
+#+EMAIL: xue.shumeng@yahoo.com
+#+KEYWORDS: linux
+#+OPTIONS: H:1 toc:0
+
+* Windows的压缩包乱码
+  #+begin_lisp
+  yum -y install p7zip p7zip-plugins
+  $ LANG=C 7z x some_zip.zip  
+  cd some_zip
+  convmv -f gbk -t utf8 -r --notest *
+  因为win下的zip包多为gbk编码,所以我们用convmv命令将其
+  从gbk转码至utf8。
+  #+end_lisp
