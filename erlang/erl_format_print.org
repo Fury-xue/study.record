@@ -1,0 +1,130 @@
+#+TITLE: Erlang 格式输出控制字符
+#+AUTHOR: xue.shumeng@yahoo.com
+#+OPTIONS: H:4 toc:t
+
+1 CHAR: ~
+   #+BEGIN_SRC
+   ~ 格式化输出前缀
+   #+END_SRC
+2 CHAR: c
+   #+BEGIN_SRC
+   EXP: io:format("|~10.5c|~9c~n",[$-,$b])
+   OUT: |     ------|+++++++++
+   DES: 10表示占位个数，5c表示重复打印5个ASCII参数，9c表示重复打印9个ASCII参数
+   NOTES: c 只能接受ASCII数字，$b 等于ASCII 98
+   #+END_SRC
+3 CHAR: f
+   #+BEGIN_SRC
+   EXP: io:format("~.5f~n",[12.2222222222])
+   OUT: 12.22222
+   DES: .5f 保留小数点后5位，不足补0
+   NOTES: 默认保留小数点后6位，控制数字不小于1，不足补0，保留时四舍五入，默认写 "~f"
+   #+END_SRC
+ 4 CHAR: e
+   #+BEGIN_SRC
+   EXP: io:format("~20.3e~n",[12.22222])
+   OUT:              1.22e+1
+   DES: 数字占20位，保留小数点后3位
+   NOTES: 默认保留小数点后6位，控制数字不小于2，不足补0，保留时四舍五入，默认写 "~e"
+   #+END_SRC
+ 5 CHAR: g
+   #+BEGIN_SRC
+   EXP: io:format("~g",[12.222222])
+   OUT: 12.2222
+   DES:
+   NOTES: 如果值>=0.1 <10000.0 则按f规则显示，否则按e规则显示
+   #+END_SRC
+ 6 CHAR: s
+   #+BEGIN_SRC
+   EXP: io:format("|~10s|~n",["hello"])
+   OUT: |     hello|
+   DES: 字符占位10，右对齐
+   NOTES: 接受字符、原子、I/O列表打印。
+          非unicode可打印0-255，打印unicode加t控制字符（"~ts"）
+   #+END_SRC
+ 7 CHAR: w
+   #+BEGIN_SRC
+   EXP: io:format("~w~n",["list"])
+   OUT: [108,105,115,116]
+   DES:
+   NOTES:用标准语法输出数据，它被用于输出各种Erlang数据类型
+   #+END_SRC
+ 8 CHAR: p
+   #+BEGIN_SRC
+   EXP: io:format("~p~n",[["list1","list1"]])
+   OUT: {hello,hello}
+   DES:
+   NOTES:把参数打印为美观的形式
+   #+END_SRC
+ 9 CHAR: W
+ #+BEGIN_SRC
+ EXP: io:format("~W~n",[[list,[list,[list,[list]]]],2])
+ OUT: [list|...]
+ DES: 打印列表
+ NOTES: 像~w一样打印数据，但多了一个打印深度参数，上例中的2，任何低于深度参数的部分都用...代替
+ #+END_SRC
+ 10 CHAR: P
+ #+BEGIN_SRC
+ EXP: io:format("~P~n",[[list,[list,[list]]],2])
+ OUT: [list|...]
+ DES: 美观形式打印列表
+ NOTES: 像~p一样打印数据，但多了一个打印深度参数，上例中的2，任何低于深度参数的部分都用...代替
+ #+END_SRC
+ 11 CHAR: B
+ #+BEGIN_SRC
+ EXP: io:format("~.2B~n",[4])
+ OUT: 100
+ DES: 以二进制形式打印数字4
+ NOTES: 接受2-36进制数字打印，默认打印十进制。参数加减号表示负值。
+        exp:io:format("~.2B~n",[-4])
+        out:-100
+ #+END_SRC
+ 12 CHAR: X
+ #+BEGIN_SRC
+ EXP: io:format("~.2X~n",[-4,"2B"])
+ OUT: -2B100
+ DES: 打印带二进制前缀的数字
+ NOTES: 像~B一样打印，但多了一个前缀参数。前缀可为任意字符。
+ #+END_SRC
+ 13 CHAR: #
+ #+BEGIN_SRC
+ EXP: io:format("~.16#~n",[-20])
+ OUT: -16#14
+ DES: 以Erlang样式打印数字-20
+ NOTES: 像~B一样，但打印出来的字符带有Erlang进制前缀，如上16#
+ #+END_SRC
+ 14 CHAR: b
+ #+BEGIN_SRC
+ EXP: io:format("~.2b~n",[4])
+ OUT: 100
+ DES: 像~B一样打印
+ NOTES: 目前不知道，有没有却别与~B的地方。官方文档上说：Like B, but prints lowercase letters
+ #+END_SRC
+ 15 CHAR: x
+ #+BEGIN_SRC
+ EXP: io:format("~.2x~n",[4])
+ OUT: 2B100
+ DES: 像~X一样打印
+ NOTES: UNKNOW，官方：Like X, but prints lowercase letters
+ #+END_SRC
+ 16 CHAR: +
+ #+BEGIN_SRC
+ EXP: io:format("~.2x~n",[4])
+ OUT: 2#100
+ DES:
+ NOTES: UNKNOW,官方：Like #, but prints lowercase letters
+ #+END_SRC
+ 17 CHAR: n
+ #+BEGIN_SRC
+ EXP:
+ OUT:
+ DES:
+ NOTES: 换行符，like 上面的例子中的~n
+ #+END_SRC
+ 18 CHAR: i
+ #+BEGIN_SRC
+ EXP: io:format("~s ~i ~s ~n",["list1","list2","list3"])
+ OUT: list1 list3
+ DES: 丢弃list1之后的一项
+ NOTES: 忽略下一项打印数据
+ #+END_SRC
